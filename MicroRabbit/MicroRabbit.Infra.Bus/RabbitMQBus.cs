@@ -3,13 +3,13 @@ using MicroService.Domain.Core.Bus;
 using MicroService.Domain.Core.Commands;
 using MicroService.Domain.Core.Events;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Text.Json;
-using RabbitMQ.Client.Events;
+using System.Threading.Tasks;
 
 namespace MicroRabbit.Infra.Bus
 {
@@ -77,7 +77,8 @@ namespace MicroRabbit.Infra.Bus
 
         private void StartBasicConsume<T>() where T : Event
         {
-            var factory = new ConnectionFactory() { 
+            var factory = new ConnectionFactory()
+            {
                 HostName = "localhost",
                 DispatchConsumersAsync = true
             };
@@ -107,7 +108,7 @@ namespace MicroRabbit.Infra.Bus
             }
             catch (Exception ex)
             {
-                
+
             }
         }
 
