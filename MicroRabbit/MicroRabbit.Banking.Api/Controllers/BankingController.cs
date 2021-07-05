@@ -11,10 +11,6 @@ namespace MicroRabbit.Banking.Api.Controllers
     [Route("[controller]")]
     public class BankingController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
         private readonly ILogger<BankingController> _logger;
         private readonly IAccountService _accountService;
