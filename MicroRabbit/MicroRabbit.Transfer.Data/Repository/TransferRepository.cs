@@ -1,7 +1,9 @@
 ﻿using MicroRabbit.Transfer.Data.Context;
 using MicroRabbit.Transfer.Domain.Interfaces;
 using MicroRabbit.Transfer.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MicroRabbit.Transfer.Data.Repository
 {
@@ -14,15 +16,15 @@ namespace MicroRabbit.Transfer.Data.Repository
             _ctx = ctx;
         }
 
-        public void Add(TransferLog transferLog)
+        public Task Add(TransferLog transferLog)
         {
-            _ctx.Add(transferLog);
-            _ctx.SaveChanges();
+            _ctx.AddAsync(transferLog);
+            return _ctx.SaveChangesAsync();
         }
 
         public IEnumerable<TransferLog> GetTransferLogs()
         {
-            return _ctx.TransferLogs;
+            return _ctx.TransferLogs.AsNoTracking();
         }
     }
 }

@@ -2,9 +2,7 @@
 using MicroRabbit.Transfer.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MicroRabbit.Transfer.Api.Controllers
 {
