@@ -118,20 +118,24 @@ namespace MicroRabbit.Infra.Bus
 
         private async Task ProcessEvent(string eventName, string message)
         {
-            if (_handlers.ContainsKey(eventName))
+            if (!_handlers.ContainsKey(eventName))
             {
-                using (var scope = _serviceScopeFactory.CreateScope())
+                return;
+            }
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var subscriptions = _handlers[eventName];
+                foreach (var subscription in subscriptions)
                 {
-                    var subscriptions = _handlers[eventName];
-                    foreach (var subscription in subscriptions)
+                    var handlerInstance = scope.ServiceProvider.GetService(subscription);
+                    if (handlerInstance == null)
                     {
-                        var handler = scope.ServiceProvider.GetService(subscription);
-                        if (handler is null) continue;
-                        var eventType = _eventTypes.SingleOrDefault(t => t.Name == eventName);
-                        var @event = JsonSerializer.Deserialize(message, eventType);
-                        var concreteType = typeof(IEventHandler<>).MakeGenericType(eventType);
-                        await (Task)concreteType.GetMethod("Handle").Invoke(handler, new object[] { @event });
+                        continue;
                     }
+                    var eventType = _eventTypes.SingleOrDefault(x => x.Name == eventName);
+                    var @event = JsonSerializer.Deserialize(message, eventType);
+                    var concreteType = typeof(IEventHandler<>).MakeGenericType(eventType);
+                    await (Task)concreteType.GetMethod(nameof(IEventHandler<Event>.Handle)).Invoke(handlerInstance, new object[] { @event });
                 }
             }
         }

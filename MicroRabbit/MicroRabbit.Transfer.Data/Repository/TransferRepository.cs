@@ -17,6 +17,7 @@ namespace MicroRabbit.Transfer.Data.Repository
         public void Add(TransferLog transferLog)
         {
             _ctx.Add(transferLog);
+            _ctx.SaveChanges();
         }
 
         public IEnumerable<TransferLog> GetTransferLogs()

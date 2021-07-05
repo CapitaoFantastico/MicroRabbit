@@ -32,6 +32,7 @@ namespace MicroRabbit.Infra.IoC
 
             // Domain Events
             services.AddTransient<IEventHandler<TransferCreatedEvent>, TransferEventHandler>();
+            services.AddTransient<TransferEventHandler>();
 
 
             // Domain Banking Commands
