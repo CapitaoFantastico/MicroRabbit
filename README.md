@@ -1,6 +1,13 @@
 # MicroRabbit
 Microservices with RabbitMQ
 
+
+## O que precisa ter instalado?
+- .net 6
+- Docker
+- SQL Server Managment ou qualquer gerenciador SQL;
+
+
 ### Subir um docker do Rabbit e um do SQL Server
 
 ```docker
